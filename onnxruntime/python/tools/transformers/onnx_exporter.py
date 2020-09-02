@@ -243,3 +243,62 @@ def export_onnx_model(model_name, opset_version, use_external_data_format, model
             optimize_onnx_model_by_ort(onnx_model_path, ort_model_path, use_gpu, overwrite, model_fusion_statistics)
 
     return onnx_model_path, is_valid_onnx_model, config.vocab_size, tokenizer.max_model_input_sizes[model_name]
+
+def export_onnx_model_tf(model_name, opset_version, use_external_data_format, model_type, cache_dir, onnx_dir, input_names,
+                         use_gpu, precision, optimize_onnx, validate_onnx, use_raw_attention_mask, overwrite,
+                         model_fusion_statistics):
+    config = AutoConfig.from_pretrained(model_name, cache_dir=cache_dir)
+
+    from transformers import TFAutoModel
+    model = TFAutoModel.from_pretrained(model_name, config=config, cache_dir=cache_dir)
+
+    tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=cache_dir)
+    example_inputs = tokenizer.encode_plus("This is a sample input", return_tensors="tf")
+
+    #example_inputs = filter_inputs(example_inputs, input_names)
+    example_outputs = model(example_inputs, training=False)
+
+    # Flatten is needed for gpt2 and distilgpt2.
+    example_outputs_flatten = flatten(example_outputs)
+    example_outputs_flatten = update_flatten_list(example_outputs_flatten, [])
+
+    onnx_model_path = get_onnx_file_path(onnx_dir, model_name, len(input_names), False, use_gpu, precision, False,
+                                         use_external_data_format)
+
+    if overwrite or not os.path.exists(onnx_model_path):
+        logger.info("Exporting ONNX model to {}".format(onnx_model_path))
+        import keras2onnx
+        onnx_model = keras2onnx.convert_keras(model, model.name)
+        keras2onnx.save_model(onnx_model, onnx_model_path)
+    else:
+        logger.info(f"Skip export since model existed: {onnx_model_path}")
+
+    is_valid_onnx_model = True
+    if validate_onnx:
+        is_valid_onnx_model = validate_onnx_model(onnx_model_path, example_inputs, example_outputs_flatten, use_gpu,
+                                                  False)
+
+    if optimize_onnx or precision == Precision.FLOAT16 or precision == Precision.INT8:  # Use script (optimizer.py) to optimize
+        optimized_model_path = get_onnx_file_path(onnx_dir, model_name, len(input_names), True, use_gpu, precision,
+                                                  False, use_external_data_format)
+        optimize_onnx_model(onnx_model_path, optimized_model_path, model_type, config.num_attention_heads,
+                            config.hidden_size, use_gpu, precision, use_raw_attention_mask, overwrite,
+                            model_fusion_statistics)
+
+        onnx_model_path = optimized_model_path
+        if validate_onnx:
+            is_valid_onnx_model = validate_onnx_model(onnx_model_path, example_inputs, example_outputs_flatten, use_gpu,
+                                                      precision == Precision.FLOAT16)
+
+        if precision == Precision.INT8:
+            logger.info(f"Quantizing model: {onnx_model_path}")
+            QuantizeHelper.quantize_onnx_model(onnx_model_path, onnx_model_path)
+            logger.info(f"Finished quantizing model: {onnx_model_path}")
+
+    else:  # Use OnnxRuntime to optimize
+        if is_valid_onnx_model:
+            ort_model_path = get_onnx_file_path(onnx_dir, model_name, len(input_names), False, use_gpu, precision, True,
+                                                use_external_data_format)
+            optimize_onnx_model_by_ort(onnx_model_path, ort_model_path, use_gpu, overwrite, model_fusion_statistics)
+
+    return onnx_model_path, is_valid_onnx_model, config.vocab_size, tokenizer.max_model_input_sizes[model_name]

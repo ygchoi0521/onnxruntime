@@ -52,14 +52,15 @@ from benchmark_helper import (create_onnxruntime_session, Precision, setup_logge
                               output_summary, output_fusion_statistics, inference_ort, inference_ort_with_io_binding,
                               allocateOutputBuffers)
 from quantize_helper import QuantizeHelper
-from onnx_exporter import create_onnxruntime_input, load_pretrained_model, export_onnx_model
+from onnx_exporter import create_onnxruntime_input, load_pretrained_model, export_onnx_model, export_onnx_model_tf
 
 logger = logging.getLogger('')
 
 # List of pretrained models: https://huggingface.co/transformers/pretrained_models.html
 # Pretrained model name to a tuple of input names, opset_version, use_external_data_format and optimization model type
 MODELS = {
-    "bert-base-cased": (["input_ids", "attention_mask", "token_type_ids"], 11, False, "bert"),
+    #"bert-base-cased": (["input_ids", "attention_mask", "token_type_ids"], 11, False, "bert"),
+    "bert-base-cased": (["input_ids"], 11, False, "bert"),
     "distilbert-base-uncased": (["input_ids", "attention_mask"], 11, False, "bert"),
     "roberta-base": (["input_ids", "attention_mask"], 11, False, "bert"),
 
@@ -83,7 +84,6 @@ if "OMP_NUM_THREADS" not in os.environ:
     os.environ["OMP_NUM_THREADS"] = str(cpu_count)
 
 import torch
-import tensorflow as tf
 from transformers import (AutoConfig, AutoTokenizer, AutoModel, GPT2Model)
 
 
@@ -111,7 +111,7 @@ def run_onnxruntime(use_gpu, model_names, precision, batch_sizes, sequence_lengt
             input_names = all_input_names[:num_inputs]
 
             with torch.no_grad():
-                onnx_model_file, is_valid_onnx_model, vocab_size, max_sequence_length = export_onnx_model(
+                onnx_model_file, is_valid_onnx_model, vocab_size, max_sequence_length = export_onnx_model_tf(
                     model_name, MODELS[model_name][1], MODELS[model_name][2], MODELS[model_name][3], cache_dir,
                     onnx_dir, input_names, use_gpu, precision, optimize_onnx, validate_onnx, use_raw_attention_mask,
                     overwrite, model_fusion_statistics)
@@ -243,9 +243,12 @@ def run_pytorch(use_gpu, model_names, precision, batch_sizes, sequence_lengths, 
 
     return results
 
-def run_tensorflow(use_gpu, model_names, precision, batch_sizes, sequence_lengths, repeat_times, cache_dir,
+def run_tensorflow(use_gpu, model_names, precision, batch_sizes, sequence_lengths, repeat_times, thread_n, cache_dir,
                    verbose):
     results = []
+
+    import tensorflow as tf
+    tf.config.threading.set_intra_op_parallelism_threads(thread_n)
 
     if not use_gpu:
         tf.config.set_visible_devices([], 'GPU')
@@ -441,7 +444,6 @@ def main():
 
     thread_n = cpu_count if args.thread_num <= 0 else args.thread_num
     torch.set_num_threads(thread_n)
-    tf.config.threading.set_intra_op_parallelism_threads(thread_n)
 
     logger.debug(torch.__config__.parallel_info())
 
@@ -459,7 +461,7 @@ def main():
 
     if enable_tensorflow:
         results += run_tensorflow(args.use_gpu, args.models, args.precision, args.batch_sizes, args.sequence_lengths,
-                                  args.test_times, args.cache_dir, args.verbose)
+                                  args.test_times, thread_n, args.cache_dir, args.verbose)
 
     model_fusion_statistics = {}
     if enable_onnxruntime:
