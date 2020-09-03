@@ -1,0 +1,64 @@
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-02 12:32:49.049814,3.0.2,1.7.0.dev20200811,1,12,0,0,12,0,24
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-02 12:35:35.939904,3.0.2,1.7.0.dev20200811,1,12,0,0,12,0,24
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-02 13:24:20.330972,3.1.0,1.6.0,0,0,12,0,0,0,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-02 13:45:51.992903,3.1.0,1.6.0,0,0,12,0,0,0,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-02 14:00:09.483323,3.1.0,1.6.0,0,0,12,0,0,0,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_3_fp32_cpu.onnx,2020-09-02 15:11:52.529168,3.1.0,1.6.0,0,12,0,0,12,0,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-02 15:21:08.864415,3.1.0,1.6.0,0,0,12,0,0,0,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-02 15:24:19.337458,3.1.0,1.6.0,0,0,12,0,0,0,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-02 15:48:13.812708,3.1.0,1.6.0,0,0,12,0,0,0,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-02 15:55:32.585577,3.1.0,1.6.0,0,0,12,0,0,0,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-02 16:00:56.012727,3.1.0,1.6.0,0,0,12,0,0,0,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-02 17:06:54.775977,3.1.0,1.6.0,0,0,12,0,0,0,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_3_fp32_cpu.onnx,2020-09-02 17:07:34.830869,3.1.0,1.6.0,0,0,12,0,0,0,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_3_fp32_cpu.onnx,2020-09-02 17:16:00.602167,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_3_fp32_cpu.onnx,2020-09-02 17:55:08.590831,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_3_fp32_cpu.onnx,2020-09-02 18:07:41.102302,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_3_fp32_cpu.onnx,2020-09-02 22:05:45.758170,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_3_fp32_cpu.onnx,2020-09-02 22:07:39.086882,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_2_fp32_cpu.onnx,2020-09-02 22:08:30.594514,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_2_fp32_cpu.onnx,2020-09-03 11:36:58.927051,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_2_fp32_cpu.onnx,2020-09-03 11:58:51.191346,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_2_fp32_cpu.onnx,2020-09-03 12:15:43.121060,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_2_fp32_cpu.onnx,2020-09-03 12:18:16.952138,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_2_fp32_cpu.onnx,2020-09-03 12:24:55.629656,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_2_fp32_cpu.onnx,2020-09-03 12:25:43.977249,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_2_fp32_cpu.onnx,2020-09-03 12:47:43.959352,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-03 13:03:29.976609,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/roberta_base_1_fp32_cpu.onnx,2020-09-03 13:04:02.324686,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/roberta_base_1_fp32_cpu.onnx,2020-09-03 13:04:26.005051,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/roberta_base_1_fp32_cpu.onnx,2020-09-03 13:06:28.110819,3.1.0,1.6.0,0,0,13,0,0,1,25
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/distilbert_base_uncased_1_fp32_cpu.onnx,2020-09-03 13:10:17.108061,3.1.0,1.6.0,0,0,7,0,0,1,13
+model_filename,datetime,transformers,torch,EmbedLayerNormalization,Attention,Gelu,FastGelu,BiasGelu,LayerNormalization,SkipLayerNormalization
+./onnx_models/bert_base_cased_1_fp32_cpu.onnx,2020-09-03 13:11:03.475580,3.1.0,1.6.0,0,0,13,0,0,1,25

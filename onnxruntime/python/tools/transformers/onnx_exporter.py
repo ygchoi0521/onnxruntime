@@ -31,6 +31,21 @@ def create_onnxruntime_input(vocab_size, batch_size, sequence_length, input_name
 
     return inputs
 
+#bugbug
+def create_onnxruntime_input_tf(vocab_size, batch_size, sequence_length, input_names):
+    input_ids = numpy.random.randint(low=0, high=vocab_size - 1, size=(batch_size, sequence_length), dtype=numpy.int32)
+
+    inputs = {'input_ids': input_ids}
+
+    if "attention_mask" in input_names:
+        attention_mask = numpy.ones([batch_size, sequence_length], dtype=numpy.int32)
+        inputs['attention_mask'] = attention_mask
+
+    if "token_type_ids" in input_names:
+        segment_ids = numpy.zeros([batch_size, sequence_length], dtype=numpy.int32)
+        inputs['token_type_ids'] = segment_ids
+
+    return inputs
 
 def filter_inputs(inputs, input_names):
     remaining_model_inputs = {}
@@ -93,7 +108,6 @@ def validate_onnx_model(onnx_model_path, example_inputs, example_outputs_flatten
 
     logger.info(f"inference result of onnxruntime is validated on {onnx_model_path}")
     return True
-
 
 def get_onnx_file_path(onnx_dir: str, model_name: str, input_count: int, optimized_by_script: bool, use_gpu: bool,
                        precision: Precision, optimized_by_onnxruntime: bool, use_external_data: bool):
@@ -244,18 +258,56 @@ def export_onnx_model(model_name, opset_version, use_external_data_format, model
 
     return onnx_model_path, is_valid_onnx_model, config.vocab_size, tokenizer.max_model_input_sizes[model_name]
 
+def validate_onnx_model_tf(onnx_model_path, example_inputs, example_outputs_flatten, use_gpu, fp16):
+    test_session = create_onnxruntime_session(onnx_model_path, use_gpu, enable_all_optimization=False)
+    if test_session is None:
+        logger.error(f"{onnx_model_path} is an invalid ONNX model")
+        return False
+
+    logger.info(f"{onnx_model_path} is a valid ONNX model")
+
+    # Compare the inference result with Tensorflow
+    example_ort_inputs = {k: t.cpu().numpy() for k, t in example_inputs.items()}
+    example_ort_outputs = test_session.run(None, example_ort_inputs)
+    if len(example_outputs_flatten) != len(example_ort_outputs):
+        logger.error(
+            f"Number of output tensors expected {len(example_outputs_flatten)}, got {len(example_ort_outputs)}")
+        return False
+
+    for i in range(len(example_outputs_flatten)):
+        abs_diff = numpy.amax(numpy.abs(example_ort_outputs[i] - example_outputs_flatten[i].cpu().numpy()))
+        if abs_diff > 1e-4:
+            logger.info(f"Max absolute diff={abs_diff} for output tensor {i}")
+
+        rtol = 5e-02 if fp16 else 1e-4
+        atol = 1e-01 if fp16 else 1e-4
+        if not numpy.allclose(example_ort_outputs[i], example_outputs_flatten[i].cpu(), rtol=rtol, atol=atol):
+            logger.error(f"Output tensor {i} is not close: rtol={rtol}, atol={atol}")
+            return False
+
+    logger.info(f"inference result of onnxruntime is validated on {onnx_model_path}")
+    return True
+
 def export_onnx_model_tf(model_name, opset_version, use_external_data_format, model_type, cache_dir, onnx_dir, input_names,
                          use_gpu, precision, optimize_onnx, validate_onnx, use_raw_attention_mask, overwrite,
                          model_fusion_statistics):
+
     config = AutoConfig.from_pretrained(model_name, cache_dir=cache_dir)
 
-    from transformers import TFAutoModel
-    model = TFAutoModel.from_pretrained(model_name, config=config, cache_dir=cache_dir)
+    model_class = "TF" + config.architectures[0]  # prepend 'TF' for tensorflow model
+    transformers_module = __import__("transformers", fromlist=[model_class])
+    model_cls = getattr(transformers_module, model_class)
+    model = model_cls(config)
 
     tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=cache_dir)
-    example_inputs = tokenizer.encode_plus("This is a sample input", return_tensors="tf")
+    tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+    example_inputs = tokenizer.encode_plus("This is a sample input", return_tensors="tf", max_length=32, pad_to_max_length=True, truncation=True)
 
-    #example_inputs = filter_inputs(example_inputs, input_names)
+    #from transformers import TFAutoModel
+    #model = TFAutoModel.from_pretrained(model_name, config=config, cache_dir=cache_dir)
+
+    example_inputs = filter_inputs(example_inputs, input_names)
+
     example_outputs = model(example_inputs, training=False)
 
     # Flatten is needed for gpt2 and distilgpt2.
@@ -268,15 +320,15 @@ def export_onnx_model_tf(model_name, opset_version, use_external_data_format, mo
     if overwrite or not os.path.exists(onnx_model_path):
         logger.info("Exporting ONNX model to {}".format(onnx_model_path))
         import keras2onnx
-        onnx_model = keras2onnx.convert_keras(model, model.name)
+        onnx_model = keras2onnx.convert_keras(model, model.name, target_opset=opset_version)
         keras2onnx.save_model(onnx_model, onnx_model_path)
     else:
         logger.info(f"Skip export since model existed: {onnx_model_path}")
 
     is_valid_onnx_model = True
     if validate_onnx:
-        is_valid_onnx_model = validate_onnx_model(onnx_model_path, example_inputs, example_outputs_flatten, use_gpu,
-                                                  False)
+        is_valid_onnx_model = validate_onnx_model_tf(onnx_model_path, example_inputs, example_outputs_flatten, use_gpu,
+                                                     False)
 
     if optimize_onnx or precision == Precision.FLOAT16 or precision == Precision.INT8:  # Use script (optimizer.py) to optimize
         optimized_model_path = get_onnx_file_path(onnx_dir, model_name, len(input_names), True, use_gpu, precision,

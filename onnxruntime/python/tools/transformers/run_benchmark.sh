@@ -11,35 +11,35 @@
 # When run_cli=true, this script is self-contained and you need not copy other files to run benchmarks
 #                    it will use onnxruntime-tools package.
 # If run_cli=false, it depends on other python script (*.py) files in this directory.
-run_cli=true
+run_cli=false
 
 # only need once
-run_install=true
+run_install=false
 
 # Engines to test.
 run_ort=true
 run_torch=false
-run_torchscript=true
-run_tensorflow=true
+run_torchscript=false
+run_tensorflow=false
 
 # Devices to test (You can run either CPU or GPU, but not both: gpu need onnxruntime-gpu, and CPU need onnxruntime).
-run_gpu_fp32=true
-run_gpu_fp16=true
-run_cpu_fp32=false
+run_gpu_fp32=false
+run_gpu_fp16=false
+run_cpu_fp32=true
 run_cpu_int8=false
 
-average_over=1000
+average_over=10
 # CPU takes longer time to run, only run 100 inferences to get average latency.
 if [ "$run_cpu_fp32" = true ] || [ "$run_cpu_int8" = true ]; then
-  average_over=100
+  average_over=1
 fi
 
 # Enable optimizer (use script instead of OnnxRuntime for graph optimization)
 use_optimizer=true
 
 # Batch Sizes and Sequence Lengths
-batch_sizes="1 4"
-sequence_lengths="8 16 32 64 128 256 512 1024"
+batch_sizes="1"
+sequence_lengths="32"
 
 # Number of inputs (input_ids, token_type_ids, attention_mask) for ONNX model.
 # Not that different input count might lead to different performance
@@ -47,7 +47,7 @@ sequence_lengths="8 16 32 64 128 256 512 1024"
 input_counts=1
 
 # Pretrained transformers models can be a subset of: bert-base-cased roberta-base gpt2 distilgpt2 distilbert-base-uncased
-models_to_test="bert-base-cased roberta-base gpt2"
+models_to_test="bert-base-cased roberta-base"
 
 # If you have mutliple GPUs, you can choose one GPU for test. Here is an example to use the second GPU:
 # export CUDA_VISIBLE_DEVICES=1

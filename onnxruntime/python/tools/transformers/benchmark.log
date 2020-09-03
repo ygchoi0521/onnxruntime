@@ -1,0 +1,233 @@
+echo ort=true torch=false torchscript=false tensorflow=true gpu_fp32=true gpu_fp16=true cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o -g
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 10 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -g -i 1
+python benchmark.py -e tensorflow -m bert-base-cased -b 1 -s 8 -t 10 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -g
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o -g -p fp16
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 10 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -g -p fp16 -i 1
+python benchmark.py -e tensorflow -m bert-base-cased -b 1 -s 8 -t 10 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -g -p fp16
+echo ort=true torch=false torchscript=false tensorflow=true gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -e tensorflow -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o
+echo ort=true torch=false torchscript=false tensorflow=true gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -e tensorflow -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o
+echo ort=true torch=false torchscript=false tensorflow=true gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -e tensorflow -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o
+echo ort=true torch=false torchscript=false tensorflow=true gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=true gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -e tensorflow -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o
+echo ort=true torch=false torchscript=false tensorflow=true gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=true gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=true gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -e tensorflow -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o
+echo ort=true torch=false torchscript=false tensorflow=true gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -e tensorflow -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o
+echo ort=true torch=false torchscript=false tensorflow=true gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -e tensorflow -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 8 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 3 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 3
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 3 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 3
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 2 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 2
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 3 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 3
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 3 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 3
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 3 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 3
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 3 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 3
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 3 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 3
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 3 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 3
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 2 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 2
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 2 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 2
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 2 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 2
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 2 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 2
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 2 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 2
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 2 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 2
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 2 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 2
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased
+python benchmark.py -m bert-base-cased -i 2 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 2
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased roberta-base gpt2 distilgpt2 distilbert-base-uncased
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -m roberta-base -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m roberta-base -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -m gpt2 -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m gpt2 -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -m distilgpt2 -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m distilgpt2 -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -m distilbert-base-uncased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m distilbert-base-uncased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=roberta-base gpt2 distilgpt2 distilbert-base-uncased
+python benchmark.py -m roberta-base -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m roberta-base -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -m gpt2 -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m gpt2 -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=gpt2 distilgpt2 distilbert-base-uncased
+python benchmark.py -m gpt2 -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m gpt2 -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=distilgpt2 distilbert-base-uncased
+python benchmark.py -m distilgpt2 -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m distilgpt2 -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=distilbert-base-uncased
+python benchmark.py -m distilbert-base-uncased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m distilbert-base-uncased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+echo ort=true torch=false torchscript=false tensorflow=false gpu_fp32=false gpu_fp16=false cpu= optimizer=true batch=1 sequence= models=bert-base-cased roberta-base
+python benchmark.py -m bert-base-cased -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m bert-base-cased -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1
+python benchmark.py -m roberta-base -i 1 -v -b 0 --overwrite -f fusion.csv -c ./cache_models --onnx_dir ./onnx_models -o
+python benchmark.py -m roberta-base -b 1 -s 32 -t 1 -f fusion.csv -r result.csv -d detail.csv -c ./cache_models --onnx_dir ./onnx_models -o -i 1

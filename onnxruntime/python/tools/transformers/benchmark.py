@@ -52,15 +52,14 @@ from benchmark_helper import (create_onnxruntime_session, Precision, setup_logge
                               output_summary, output_fusion_statistics, inference_ort, inference_ort_with_io_binding,
                               allocateOutputBuffers)
 from quantize_helper import QuantizeHelper
-from onnx_exporter import create_onnxruntime_input, load_pretrained_model, export_onnx_model, export_onnx_model_tf
+from onnx_exporter import create_onnxruntime_input, load_pretrained_model, export_onnx_model, export_onnx_model_tf, create_onnxruntime_input_tf
 
 logger = logging.getLogger('')
 
 # List of pretrained models: https://huggingface.co/transformers/pretrained_models.html
 # Pretrained model name to a tuple of input names, opset_version, use_external_data_format and optimization model type
 MODELS = {
-    #"bert-base-cased": (["input_ids", "attention_mask", "token_type_ids"], 11, False, "bert"),
-    "bert-base-cased": (["input_ids"], 11, False, "bert"),
+    "bert-base-cased": (["input_ids", "attention_mask", "token_type_ids"], 11, False, "bert"),
     "distilbert-base-uncased": (["input_ids", "attention_mask"], 11, False, "bert"),
     "roberta-base": (["input_ids", "attention_mask"], 11, False, "bert"),
 
@@ -140,7 +139,7 @@ def run_onnxruntime(use_gpu, model_names, precision, batch_sizes, sequence_lengt
                     if max_sequence_length is not None and sequence_length > max_sequence_length:
                         continue
 
-                    ort_inputs = create_onnxruntime_input(vocab_size, batch_size, sequence_length, input_names)
+                    ort_inputs = create_onnxruntime_input_tf(vocab_size, batch_size, sequence_length, input_names)
 
                     result_template = {
                         "engine": "onnxruntime",

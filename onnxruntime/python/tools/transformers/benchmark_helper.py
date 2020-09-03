@@ -194,7 +194,8 @@ def inference_ort_with_io_binding(ort_session, ort_inputs, result_template, repe
     # Bind inputs to device
     for name in ort_inputs.keys():
         np_input = torch.from_numpy(ort_inputs[name]).to(device)
-        io_binding.bind_input(name, np_input.device.type, 0, numpy.longlong, np_input.shape, np_input.data_ptr())
+        ##bugbug
+        io_binding.bind_input(name, np_input.device.type, 0, numpy.int32, np_input.shape, np_input.data_ptr())
     has_pooler = True if len(ort_output_names) == 2 else False
     # Bind outputs buffers with the sizes needed if not allocated already
     if output_buffers["last_state"] is None:
