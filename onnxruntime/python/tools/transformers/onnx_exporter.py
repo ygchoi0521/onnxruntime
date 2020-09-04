@@ -150,25 +150,24 @@ def optimize_onnx_model(onnx_model_path, optimized_model_path, model_type, num_a
                         precision, use_raw_attention_mask, overwrite, model_fusion_statistics):
     if overwrite or not os.path.exists(optimized_model_path):
         from optimizer import optimize_model
-        from onnx_model_bert import BertOptimizationOptions
-        optimization_options = BertOptimizationOptions(model_type)
-        optimization_options.use_raw_attention_mask(use_raw_attention_mask)
-        if Precision.FLOAT16 == precision:
-            optimization_options.enable_gelu_approximation = True
-        if Precision.INT8 == precision:
-            optimization_options.enable_embed_layer_norm = False
+        #from onnx_model_bert import BertOptimizationOptions
+        #optimization_options = BertOptimizationOptions(model_type)
+        #optimization_options.use_raw_attention_mask(use_raw_attention_mask)
+        #if Precision.FLOAT16 == precision:
+        #    optimization_options.enable_gelu_approximation = True
+        #if Precision.INT8 == precision:
+        #    optimization_options.enable_embed_layer_norm = False
 
         # Use script to optimize model.
         # Use opt_level <= 1 for models to be converted to fp16, because some fused op (like FusedGemm) has only fp32 and no fp16.
         # It is better to be conservative so we use opt_level=0 here, in case MemcpyFromHost is added to the graph by OnnxRuntime.
         opt_model = optimize_model(onnx_model_path,
-                                   model_type,
+                                   'bert_keras',
                                    num_heads=num_attention_heads,
                                    hidden_size=hidden_size,
-                                   opt_level=0,
-                                   optimization_options=optimization_options,
-                                   use_gpu=use_gpu,
-                                   only_onnxruntime=False)
+                                   opt_level=0)
+        print("opt_model.use_dynamic_axes()")
+        opt_model.use_dynamic_axes()
         model_fusion_statistics[optimized_model_path] = opt_model.get_fused_operator_statistics()
 
         if Precision.FLOAT16 == precision:
@@ -294,14 +293,16 @@ def export_onnx_model_tf(model_name, opset_version, use_external_data_format, mo
 
     config = AutoConfig.from_pretrained(model_name, cache_dir=cache_dir)
 
-    model_class = "TF" + config.architectures[0]  # prepend 'TF' for tensorflow model
-    transformers_module = __import__("transformers", fromlist=[model_class])
-    model_cls = getattr(transformers_module, model_class)
-    model = model_cls(config)
+    #model_class = "TF" + config.architectures[0]  # prepend 'TF' for tensorflow model
+    #transformers_module = __import__("transformers", fromlist=[model_class])
+    #model_cls = getattr(transformers_module, model_class)
+    #model = model_cls(config)
+    from transformers import TFBertForQuestionAnswering
+    model = TFBertForQuestionAnswering.from_pretrained(model_name, cache_dir=cache_dir)
+    model._saved_model_inputs_spec = None
 
     tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=cache_dir)
-    tokenizer.add_special_tokens({'pad_token': '[PAD]'})
-    example_inputs = tokenizer.encode_plus("This is a sample input", return_tensors="tf", max_length=32, pad_to_max_length=True, truncation=True)
+    example_inputs = tokenizer.encode_plus("This is a sample input", return_tensors="tf", max_length=512, pad_to_max_length=True, truncation=True)
 
     #from transformers import TFAutoModel
     #model = TFAutoModel.from_pretrained(model_name, config=config, cache_dir=cache_dir)

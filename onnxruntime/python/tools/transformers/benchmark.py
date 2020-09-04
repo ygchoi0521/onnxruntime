@@ -109,11 +109,12 @@ def run_onnxruntime(use_gpu, model_names, precision, batch_sizes, sequence_lengt
 
             input_names = all_input_names[:num_inputs]
 
-            with torch.no_grad():
-                onnx_model_file, is_valid_onnx_model, vocab_size, max_sequence_length = export_onnx_model_tf(
-                    model_name, MODELS[model_name][1], MODELS[model_name][2], MODELS[model_name][3], cache_dir,
-                    onnx_dir, input_names, use_gpu, precision, optimize_onnx, validate_onnx, use_raw_attention_mask,
-                    overwrite, model_fusion_statistics)
+            #with torch.no_grad():
+            onnx_model_file, is_valid_onnx_model, vocab_size, max_sequence_length = export_onnx_model_tf(
+                model_name, MODELS[model_name][1], MODELS[model_name][2], MODELS[model_name][3], cache_dir,
+                onnx_dir, input_names, use_gpu, precision, optimize_onnx, validate_onnx, use_raw_attention_mask,
+                overwrite, model_fusion_statistics)
+            print(onnx_model_file)
             if not is_valid_onnx_model:
                 continue
 
@@ -410,6 +411,9 @@ def parse_arguments():
     parser.add_argument("--thread_num", required=False, type=int, default=-1, help="Threads to use")
 
     args = parser.parse_args()
+    #args = parser.parse_args(["-m", "bert-base-cased", "-b" ,"1" ,"-s" ,"32" ,"-t" ,"1", "-f" ,"fusion.csv" ,"-r" ,"result.csv" ,"-d", "detail.csv", "-c" ,"/home/wangye/Transformer/tf/onnxruntime/python/tools/transformers/cache_models", "--onnx_dir" ,"/home/wangye/Transformer/tf/onnxruntime/python/tools/transformers/onnx_models" ,"-o" ,"-i","3"])
+
+
     return args
 
 
