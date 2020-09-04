@@ -293,12 +293,12 @@ def export_onnx_model_tf(model_name, opset_version, use_external_data_format, mo
 
     config = AutoConfig.from_pretrained(model_name, cache_dir=cache_dir)
 
-    #model_class = "TF" + config.architectures[0]  # prepend 'TF' for tensorflow model
-    #transformers_module = __import__("transformers", fromlist=[model_class])
-    #model_cls = getattr(transformers_module, model_class)
-    #model = model_cls(config)
-    from transformers import TFBertForQuestionAnswering
-    model = TFBertForQuestionAnswering.from_pretrained(model_name, cache_dir=cache_dir)
+    #from transformers import TFBertForQuestionAnswering
+    #model = TFBertForQuestionAnswering.from_pretrained(model_name, cache_dir=cache_dir)
+
+    from transformers import TFAutoModel
+    model = TFAutoModel.from_pretrained(model_name, cache_dir=cache_dir)
+
     model._saved_model_inputs_spec = None
 
     tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=cache_dir)
