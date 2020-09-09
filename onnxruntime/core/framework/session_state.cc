@@ -127,7 +127,7 @@ Status SessionState::PopulateKernelCreateInfo(KernelRegistryManager& kernel_regi
     ORT_IGNORE_RETURN_VALUE(
         kernel_create_info_map_.insert({node.Index(), gsl::not_null<const KernelCreateInfo*>(kci)}));
   }
-
+std::cout << "***** step75 - PopulateKernelCreateInfo\n";
   for (const auto& entry : subgraph_session_states_) {
     for (const auto& name_to_subgraph_session_state : entry.second) {
       SessionState& subgraph_session_state = *name_to_subgraph_session_state.second;
@@ -156,21 +156,38 @@ Status SessionState::CreateKernels(const KernelRegistryManager& kernel_registry_
     }
     session_kernels_.clear();
     session_kernels_.resize(max_nodeid + 1, nullptr);
+
+std::cout << "***** step7111 - CreateKernels loop\n";
+
     for (auto& node : graph_viewer_->Nodes()) {
       // construct and save the kernels
+
+std::cout << "*****  GetNodeKernelCreateInfo - " << node.Name() << "\n";
+
       const KernelCreateInfo& kci = GetNodeKernelCreateInfo(node.Index());
+
+std::cout << "***** done GetNodeKernelCreateInfo \n";
 
       // the execution provider was required to be valid to find the KernelCreateInfo so we don't need to check it here
       onnxruntime::ProviderType exec_provider_name = node.GetExecutionProviderType();
       const IExecutionProvider& exec_provider = *execution_providers_.Get(exec_provider_name);
 
+std::cout << "*****  CreateKernel - " << exec_provider_name << "\n";
+
       auto op_kernel = kernel_registry_manager.CreateKernel(node, exec_provider, *this, kci);
+
+      std::cout << "***** done CreateKernel \n";
 
       // assumes vector is already resize()'ed to the number of nodes in the graph
       session_kernels_[node.Index()] = op_kernel.release();
     }
+
+std::cout << "***** step7112 - CreateKernels loop end\n";
+
   }
   node_index_info_ = onnxruntime::make_unique<NodeIndexInfo>(*graph_viewer_, ort_value_name_idx_map_);
+
+  std::cout << "***** step7113 - CreateKernels return\n";
   return Status::OK();
 }
 
@@ -708,6 +725,8 @@ Status SessionState::CreateSubgraphSessionState() {
       // Pass fused function manager to subgraph
       subgraph_session_state->fused_funcs_mgr_.SetFusedFuncs(fused_funcs_mgr_);
 
+std::cout << "***** step73 - CreateSubgraphSessionState\n";
+
       // recurse
       ORT_RETURN_IF_ERROR(subgraph_session_state->CreateSubgraphSessionState());
 
@@ -781,13 +800,17 @@ Status SessionState::FinalizeSessionState(const std::basic_string<PATH_CHAR_TYPE
   // recursively create the subgraph session state instances and populate the kernel create info in them.
   // it's simpler to handle the kernel create info recursively when deserializing,
   // so also do it recursively when calling PopulateKernelCreateInfo for consistency.
+  std::cout << "***** step71 - FinalizeSessionState\n";
   ORT_RETURN_IF_ERROR(CreateSubgraphSessionState());
+  std::cout << "***** step72 - FinalizeSessionState\n";
 
   if (serialized_session_state) {
     ORT_RETURN_IF_ERROR(LoadFromOrtFormat(*serialized_session_state, kernel_registry_manager));
   } else {
 #if !defined(ORT_MINIMAL_BUILD)
+std::cout << "***** step73 - FinalizeSessionState\n";
     ORT_RETURN_IF_ERROR(PopulateKernelCreateInfo(kernel_registry_manager));
+    std::cout << "***** step74 - FinalizeSessionState\n";
 #else
     ORT_UNUSED_PARAMETER(graph_location);
     ORT_UNUSED_PARAMETER(kernel_registry_manager);
@@ -809,6 +832,8 @@ Status SessionState::FinalizeSessionStateImpl(const std::basic_string<PATH_CHAR_
                                               bool remove_initializers) {
   CreateGraphInfo();
 
+std::cout << "***** step76 - FinalizeSessionStateImpl\n";
+
   // ignore any outer scope args we don't know about. this can happen if a node contains multiple subgraphs.
   std::vector<const NodeArg*> valid_outer_scope_node_args;
   if (parent_node) {
@@ -824,17 +849,21 @@ Status SessionState::FinalizeSessionStateImpl(const std::basic_string<PATH_CHAR_
                   });
   }
 
+std::cout << "***** step77 - FinalizeSessionStateImpl\n";
+
   SequentialPlannerContext context(session_options.execution_mode);
   ORT_RETURN_IF_ERROR(SequentialPlanner::CreatePlan(parent_node, *graph_viewer_, valid_outer_scope_node_args,
                                                     execution_providers_, kernel_create_info_map_,
                                                     ort_value_name_idx_map_, context, p_seq_exec_plan_));
+
+std::cout << "***** step78 - FinalizeSessionStateImpl\n";
 
   // Uncomment the below to dump the allocation plan to std::cout
   // LOGS(logger_, VERBOSE) << std::make_pair(p_seq_exec_plan_.get(), this);
 
   std::unique_ptr<ITensorAllocator> tensor_allocator_(
       ITensorAllocator::Create(enable_mem_pattern_, *p_seq_exec_plan_, *this, weights_buffers_));
-
+std::cout << "***** step79 - FinalizeSessionStateImpl\n";
   // move initializers from TensorProto instances in Graph to OrtValue instances in SessionState
   ORT_RETURN_IF_ERROR(
       session_state_utils::SaveInitializedTensors(
@@ -845,6 +874,7 @@ Status SessionState::FinalizeSessionStateImpl(const std::basic_string<PATH_CHAR_
             return AddInitializedTensor(idx, value, &d, constant);
           },
           logger_, data_transfer_mgr_));
+std::cout << "***** step710 - FinalizeSessionStateImpl\n";
 
   // remove weights from the graph now to save memory but in many cases it won't save memory, if the tensor was
   // preallocated with the some other tensors in a single 'allocate' call, which is very common.
@@ -853,20 +883,22 @@ Status SessionState::FinalizeSessionStateImpl(const std::basic_string<PATH_CHAR_
     CleanInitializedTensorsFromGraph();
   }
 
+std::cout << "***** step711 - FinalizeSessionStateImpl\n";
   ORT_RETURN_IF_ERROR(CreateKernels(kernel_registry_manager));
 
+std::cout << "***** step712 - FinalizeSessionStateImpl\n";
   const auto disable_prepacking =
       session_options.GetConfigOrDefault(ORT_SESSION_OPTIONS_CONFIG_DISABLEPREPACKING, "0");
 
   if (disable_prepacking != "1") {
     ORT_RETURN_IF_ERROR(PrepackInitializedConstantTensors());
   }
-
+std::cout << "***** step713 - FinalizeSessionStateImpl\n";
   ORT_RETURN_IF_ERROR(
       session_state_utils::SaveInputOutputNamesToNodeMapping(*graph_viewer_, *this, valid_outer_scope_node_args));
 
   // Need to recurse into subgraph session state instances to finalize them and add the execution info
-
+std::cout << "***** step714 - FinalizeSessionStateImpl\n";
   // Currently all subgraphs need to be executed using the sequential EP due to potential deadlock with the current
   // parallel executor implementation
   SessionOptions subgraph_session_options(session_options);
@@ -885,21 +917,27 @@ Status SessionState::FinalizeSessionStateImpl(const std::basic_string<PATH_CHAR_
 
       SessionState& subgraph_session_state = *entry->second;
 
+std::cout << "***** step715 - recurse FinalizeSessionStateImpl\n";
       // recurse
       ORT_RETURN_IF_ERROR(subgraph_session_state.FinalizeSessionStateImpl(
           graph_location, kernel_registry_manager, &node, subgraph_session_options, remove_initializers));
+
+std::cout << "***** step716 - recurse FinalizeSessionStateImpl\n";
 
       // setup all the info for handling the feeds and fetches used in subgraph execution
       auto* p_op_kernel = GetMutableKernel(node.Index());
       ORT_ENFORCE(p_op_kernel);
 
+std::cout << "***** step717 - FinalizeSessionStateImpl\n";
+
       // Downcast is safe, since only control flow nodes have subgraphs
       // (node.GetAttributeNameToMutableSubgraphMap() is non-empty)
       auto& control_flow_kernel = static_cast<controlflow::IControlFlowKernel&>(*p_op_kernel);
       ORT_RETURN_IF_ERROR(control_flow_kernel.SetupSubgraphExecutionInfo(*this, attr_name, subgraph_session_state));
+      std::cout << "***** step718 - FinalizeSessionStateImpl\n";
     }
   }
-
+std::cout << "***** step719 - FinalizeSessionStateImpl\n";
   return Status::OK();
 }
 
