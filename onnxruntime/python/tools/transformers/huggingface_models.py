@@ -84,12 +84,12 @@ MODELS = {
     "albert-large-v2": (["input_ids"], 12, False, "bert"),
     "albert-xlarge-v2": (["input_ids"], 12, True, "bert"),
     "albert-xxlarge-v2": (["input_ids"], 12, True, "bert"),
-# T5
-    #"t5-small": (["input_ids"], 11, False, "bert"),
-    #"t5-base": (["input_ids"], 11, False, "bert"),
-    #"t5-large": (["input_ids"], 11, False, "bert"),
-    #"t5-3b": (["input_ids"], 11, False, "bert"),
-    #"t5-11b": (["input_ids"], 11, False, "bert"),
+# T5(not supported on torchscript)
+    "t5-small": (["input_ids"], 12, False, "bert"),
+    "t5-base": (["input_ids"], 12, False, "bert"),
+    "t5-large": (["input_ids"], 12, True, "bert"),
+    "t5-3b": (["input_ids"], 12, True, "bert"),
+    "t5-11b": (["input_ids"], 12, True, "bert"),
 # XLM-RoBERTa
     "xlm-roberta-base": (["input_ids"], 11, False, "bert"),
     "xlm-roberta-large": (["input_ids"], 11, True, "bert"),
