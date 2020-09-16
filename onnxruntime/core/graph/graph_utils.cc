@@ -760,7 +760,8 @@ bool RemoveNodesWithOneOutputBottomUp(Graph& graph, const Node& start_node, bool
   while (q.size() != 0) {
     const Node& cur_node = *(q.front());
     q.pop();
-std::cout << "763" << std::endl;
+std::cout << "cur_node is " << cur_node.Name() << std::endl;
+std::cout << "cur_node's Index is " << cur_node.Index() << std::endl;
     if (removed_nodes.find(cur_node.Name()) != removed_nodes.end()) {
       continue;
     }
@@ -786,12 +787,14 @@ std::cout << "pushed node: " << child_node->OpType() << std::endl;
     }
 std::cout << "787" << std::endl;
     if (force || cur_node.GetOutputEdgesCount() == 0) {
-      removed_nodes.insert(cur_node.Name());
-std::cout << "Delete node: " << cur_node.OpType() << std::endl;
+
+std::cout << "Delete node: " << cur_node.Name() << std::endl;
+std::cout << "Delete node's Index: " << cur_node.Index() << std::endl;
       Node* cur_node_p = graph.GetNode(cur_node.Index());
       RemoveNodeOutputEdges(graph, *cur_node_p);
       graph.RemoveNode(cur_node_p->Index());
-
+std::cout << "Store removed node: " << cur_node.Name() << std::endl;
+      removed_nodes.insert(cur_node.Name());
       force = false;
     }
   }
