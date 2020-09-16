@@ -676,14 +676,14 @@ static bool FuseSubGraph(Graph& graph,
     DEBUG_LOG("Beta should be of shape (hidden_size). ");
     return false;
   }
-
+std::cout << "embedlayernorm:679" << std::endl;
   CreateEmbedLayernormNode(graph, input_ids, segment_ids, word_embedding, position_embedding, segment_embedding,
                            layer_norm_node);
-
+std::cout << "embedlayernorm:682" << std::endl;
   if (!nodes_to_remove.empty()) {
     graph_utils::RemoveNodesWithOneOutputBottomUp(graph, *graph.GetNode(nodes_to_remove[0]));
   }
-
+std::cout << "embedlayernorm:686" << std::endl;
   nodes_to_remove.clear();
 
   nodes_to_remove.push_back(word_gather_node.Index());

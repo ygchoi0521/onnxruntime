@@ -760,7 +760,7 @@ bool RemoveNodesWithOneOutputBottomUp(Graph& graph, const Node& start_node, bool
   while (q.size() != 0) {
     const Node& cur_node = *(q.front());
     q.pop();
-
+std::cout << "763" << std::endl;
     if (removed_nodes.find(cur_node.Index()) != removed_nodes.end()) {
       continue;
     }
@@ -769,7 +769,7 @@ bool RemoveNodesWithOneOutputBottomUp(Graph& graph, const Node& start_node, bool
     if (cur_node.GetOutputEdgesCount() > 1 || !graph.GetNodeOutputsInGraphOutputs(cur_node).empty()) {
       continue;
     }
-
+std::cout << "772" << std::endl;
     // push the parents of current node to the queue.
     for (unsigned int i = 0; i < cur_node.InputDefs().size(); ++i) {
       const std::string& input_name = GetNodeInputName(cur_node, i);
@@ -780,11 +780,13 @@ bool RemoveNodesWithOneOutputBottomUp(Graph& graph, const Node& start_node, bool
       const Node* child_node = GetInputNode(cur_node, i);
       std::unordered_set<NodeIndex>::const_iterator it = removed_nodes.find(child_node->Index());
       if (it == removed_nodes.end()) {
+std::cout << "pushed node: " << child_node->OpType() << std::endl;
         q.push(child_node);
       }
     }
-
+std::cout << "787" << std::endl;
     if (force || cur_node.GetOutputEdgesCount() == 0) {
+std::cout << "Delete node: " << cur_node_p->OpType() << std::endl;
       Node* cur_node_p = graph.GetNode(cur_node.Index());
       RemoveNodeOutputEdges(graph, *cur_node_p);
       graph.RemoveNode(cur_node_p->Index());
@@ -793,7 +795,7 @@ bool RemoveNodesWithOneOutputBottomUp(Graph& graph, const Node& start_node, bool
       force = false;
     }
   }
-
+std::cout << "798" << std::endl;
   if (removed_nodes.size() == 0) {
     // Nothing to remove
     return false;
