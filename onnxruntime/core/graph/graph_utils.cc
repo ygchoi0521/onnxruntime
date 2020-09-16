@@ -787,7 +787,7 @@ std::cout << "pushed node: " << child_node->OpType() << std::endl;
 std::cout << "787" << std::endl;
     if (force || cur_node.GetOutputEdgesCount() == 0) {
       removed_nodes.insert(cur_node.Index());
-std::cout << "Delete node: " << cur_node_p->OpType() << std::endl;
+std::cout << "Delete node: " << cur_node.OpType() << std::endl;
       Node* cur_node_p = graph.GetNode(cur_node.Index());
       RemoveNodeOutputEdges(graph, *cur_node_p);
       graph.RemoveNode(cur_node_p->Index());
