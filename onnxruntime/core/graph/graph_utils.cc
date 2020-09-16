@@ -753,12 +753,12 @@ bool FindPath(Graph& graph, const Node& node, bool is_input_edge, const std::vec
 }
 
 bool RemoveNodesWithOneOutputBottomUp(Graph& graph, const Node& start_node, bool force) {
-  std::queue<const Node*> q;
+  std::queue<const Node> q;
   std::set<std::string> removed_nodes;
-  q.push(&start_node);
+  q.push(start_node);
   // From the current node, remove nodes bottom-up util it reaches a node with multiple outputs/graph output.
   while (q.size() != 0) {
-    const Node& cur_node = *(q.front());
+    const Node cur_node = q.front();
     q.pop();
 std::cout << "cur_node is " << cur_node.Name() << std::endl;
 std::cout << "cur_node's Index is " << cur_node.Index() << std::endl;
@@ -782,7 +782,7 @@ std::cout << "772" << std::endl;
       std::set<std::string>::const_iterator it = removed_nodes.find(child_node->Name());
       if (it == removed_nodes.end()) {
 std::cout << "pushed node: " << child_node->OpType() << std::endl;
-        q.push(child_node);
+        q.push(*child_node);
       }
     }
 std::cout << "787" << std::endl;
