@@ -754,7 +754,7 @@ bool FindPath(Graph& graph, const Node& node, bool is_input_edge, const std::vec
 
 bool RemoveNodesWithOneOutputBottomUp(Graph& graph, const Node& start_node, bool force) {
   std::queue<const Node*> q;
-  std::unordered_set<NodeIndex> removed_nodes;
+  std::set<NodeIndex> removed_nodes;
   q.push(&start_node);
   // From the current node, remove nodes bottom-up util it reaches a node with multiple outputs/graph output.
   while (q.size() != 0) {
@@ -778,7 +778,7 @@ std::cout << "772" << std::endl;
         continue;
       }
       const Node* child_node = GetInputNode(cur_node, i);
-      std::unordered_set<NodeIndex>::const_iterator it = removed_nodes.find(child_node->Index());
+      std::set<NodeIndex>::const_iterator it = removed_nodes.find(child_node->Index());
       if (it == removed_nodes.end()) {
 std::cout << "pushed node: " << child_node->OpType() << std::endl;
         q.push(child_node);
