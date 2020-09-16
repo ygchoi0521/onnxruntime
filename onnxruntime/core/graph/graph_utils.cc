@@ -754,14 +754,14 @@ bool FindPath(Graph& graph, const Node& node, bool is_input_edge, const std::vec
 
 bool RemoveNodesWithOneOutputBottomUp(Graph& graph, const Node& start_node, bool force) {
   std::queue<const Node*> q;
-  std::set<NodeIndex> removed_nodes;
+  std::set<std::string> removed_nodes;
   q.push(&start_node);
   // From the current node, remove nodes bottom-up util it reaches a node with multiple outputs/graph output.
   while (q.size() != 0) {
     const Node& cur_node = *(q.front());
     q.pop();
 std::cout << "763" << std::endl;
-    if (removed_nodes.find(cur_node.Index()) != removed_nodes.end()) {
+    if (removed_nodes.find(cur_node.Name()) != removed_nodes.end()) {
       continue;
     }
     // Each eligible node in the subgraph must have less than one output edge and no output should be
@@ -778,7 +778,7 @@ std::cout << "772" << std::endl;
         continue;
       }
       const Node* child_node = GetInputNode(cur_node, i);
-      std::set<NodeIndex>::const_iterator it = removed_nodes.find(child_node->Index());
+      std::set<std::string>::const_iterator it = removed_nodes.find(child_node->Name());
       if (it == removed_nodes.end()) {
 std::cout << "pushed node: " << child_node->OpType() << std::endl;
         q.push(child_node);
@@ -786,7 +786,7 @@ std::cout << "pushed node: " << child_node->OpType() << std::endl;
     }
 std::cout << "787" << std::endl;
     if (force || cur_node.GetOutputEdgesCount() == 0) {
-      removed_nodes.insert(cur_node.Index());
+      removed_nodes.insert(cur_node.Name());
 std::cout << "Delete node: " << cur_node.OpType() << std::endl;
       Node* cur_node_p = graph.GetNode(cur_node.Index());
       RemoveNodeOutputEdges(graph, *cur_node_p);
