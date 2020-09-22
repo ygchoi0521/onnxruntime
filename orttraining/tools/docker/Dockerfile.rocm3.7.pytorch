@@ -112,7 +112,7 @@ RUN CC=mpicc MPICC=mpicc pip install mpi4py --no-binary mpi4py
 # ONNX Runtime
 WORKDIR $GITHUB_DIR
 ENV ORT_DIR=$GITHUB_DIR/onnxruntime
-RUN git clone --recursive -b wezhan/mi100 https://github.com/microsoft/onnxruntime.git \
+RUN git clone --recursive -b wezhan/mi100-gpt2 https://github.com/microsoft/onnxruntime.git \
   && cd onnxruntime \
   && python3 tools/ci_build/build.py \
     --cmake_extra_defines ONNXRUNTIME_VERSION=`cat ./VERSION_NUMBER` \
@@ -131,8 +131,7 @@ RUN git clone --recursive -b wezhan/mi100 https://github.com/microsoft/onnxrunti
 
 # ONNX Runtime Training Examples
 WORKDIR $GITHUB_DIR
-# ARG GPT2_DATASET=wikitext-2
-ARG GPT2_DATASET=wikitext-2-raw
+ARG GPT2_DATASET=wikitext-103
 RUN git clone -b wezhan/amdgpu https://github.com/microsoft/onnxruntime-training-examples.git \
   && cd onnxruntime-training-examples \
   # Nvidia BERT
@@ -162,8 +161,8 @@ RUN git clone -b wezhan/amdgpu https://github.com/microsoft/onnxruntime-training
 
 ENV BERT_DIR=${WORKSPACE_DIR}/BERT
 ENV GPT2_DIR=${WORKSPACE_DIR}/GPT2
-ENV TRAIN_FILE=${WORKSPACE_DIR}/GPT2/${GPT2_DATASET}/wiki.train.raw
-ENV TEST_FILE=${WORKSPACE_DIR}/GPT2/${GPT2_DATASET}/wiki.test.raw
+ENV TRAIN_FILE=${WORKSPACE_DIR}/GPT2/${GPT2_DATASET}/wiki.train.tokens
+ENV TEST_FILE=${WORKSPACE_DIR}/GPT2/${GPT2_DATASET}/wiki.test.tokens
 
 # Enable ssh access without password needed
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config

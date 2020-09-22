@@ -1209,7 +1209,7 @@ if (onnxruntime_ENABLE_TRAINING)
 
         if (NCCL_MAJOR_VERSION_DEFINED AND NCCL_MINOR_VERSION_DEFINED)
           if ("${NCCL_MAJOR_VERSION}.${NCCL_MINOR_VERSION}" VERSION_GREATER_EQUAL "2.7")
-            add_definitions(-DUSE_NCCL_P2P=1)
+		  #add_definitions(-DUSE_NCCL_P2P=1)
             message( STATUS "NCCL P2P is enabled for supporting ncclSend and ncclRecv." )
           endif()
         endif()
