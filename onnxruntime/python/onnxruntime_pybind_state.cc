@@ -311,7 +311,7 @@ static const char* GetDeviceName(const OrtDevice& device) {
     case OrtDevice::CPU:
       return CPU;
     case OrtDevice::GPU:
-      return CUDA;
+      return GPU;
     case OrtDevice::FPGA:
       return "FPGA";
     default:

@@ -64,7 +64,7 @@ CUDAExecutionProvider::PerThreadContext::PerThreadContext(OrtDevice::DeviceId de
 
   AllocatorCreationInfo default_memory_info(
       [](OrtDevice::DeviceId id) {
-        return onnxruntime::make_unique<CUDAAllocator>(id, CUDA);
+        return onnxruntime::make_unique<CUDAAllocator>(id, GPU);
       },
       device_id,
       true,
@@ -133,7 +133,7 @@ CUDAExecutionProvider::CUDAExecutionProvider(const CUDAExecutionProviderInfo& in
 
   AllocatorCreationInfo default_memory_info(
       [](OrtDevice::DeviceId device_id) {
-        return onnxruntime::make_unique<CUDAAllocator>(device_id, CUDA);
+        return onnxruntime::make_unique<CUDAAllocator>(device_id, GPU);
       },
       device_id_,
       true,
@@ -145,7 +145,7 @@ CUDAExecutionProvider::CUDAExecutionProvider(const CUDAExecutionProviderInfo& in
 
   AllocatorCreationInfo pinned_memory_info(
       [](OrtDevice::DeviceId device_id) {
-        return onnxruntime::make_unique<CUDAPinnedAllocator>(device_id, CUDA_PINNED);
+        return onnxruntime::make_unique<CUDAPinnedAllocator>(device_id, GPU_PINNED);
       },
       CPU_ALLOCATOR_DEVICE_ID);
 

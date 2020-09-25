@@ -566,7 +566,7 @@ void setup_training_params(BertParameters& params) {
   if (params.cuda_mem_limit_in_gb > 0)
     cuda_mem_limit = static_cast<size_t>(params.cuda_mem_limit_in_gb * 1024 * 1024 * 1024);
   params.providers.emplace(kCudaExecutionProvider, CreateExecutionProviderFactory_CUDA(device_id, cuda_mem_limit));
-  params.input_allocator = std::make_shared<CUDAPinnedAllocator>(device_id, CUDA_PINNED);
+  params.input_allocator = std::make_shared<CUDAPinnedAllocator>(device_id, GPU_PINNED);
 #endif
 
   params.loss_func_info = LossFunctionInfo(OpDef("BertLoss", kOnnxDomain),
