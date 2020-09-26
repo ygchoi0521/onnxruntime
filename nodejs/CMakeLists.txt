@@ -26,8 +26,8 @@ endif()
 
 # include dirs
 include_directories(${CMAKE_JS_INC})
-include_directories(${CMAKE_SOURCE_DIR}/../include/onnxruntime/core/session)
 include_directories(${CMAKE_SOURCE_DIR}/../include/onnxruntime/core/common)
+include_directories(${CMAKE_SOURCE_DIR}/../include/onnxruntime/core/session)
 include_directories(${CMAKE_SOURCE_DIR}/node_modules/node-addon-api)
 
 # source files
