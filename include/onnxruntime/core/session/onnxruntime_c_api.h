@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#include <core/common/common_c_api.h>
+#include "core/common/common_c_api.h"
 
 // This value is used in structures passed to ORT so that a newer version of ORT will still work with them
 #define ORT_API_VERSION 5
