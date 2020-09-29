@@ -1602,7 +1602,7 @@ void Graph::KahnsTopologicalSort(const std::function<void(const Node*)>& enter,
     topo_order.push_back(current->Index());
   }
 
-  if (NumberOfNodes() != static_cast<int>(topo_order.size())) {
+  if (NumberOfNodes() != static_cast<int>(topo_order.size())) {   
     ORT_THROW("Some nodes are not included in the topological sort, graph have a cycle.");
   }
 }
