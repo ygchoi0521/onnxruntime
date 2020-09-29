@@ -105,12 +105,15 @@ void ComputeBroadcastBackwardAxesDynamic(const ArgDef& a,
                                          const ArgDef* a_axes,
                                          const ArgDef* b_axes,
                                          std::vector<NodeDef>& output) {
-  // Populate the node names explicitly in case a and b are the same tensor and
-  // resulting in duplicated node name for Shape node. For example, y = x^2 is sometimes represented as Mul(x,x)
   output.push_back(
-      NodeDef("Shape", {a}, {a_shape}, NodeAttributes(), a_shape.name + "_lhs"));
+      NodeDef("Shape",
+              {a},
+              {a_shape}));
+
   output.push_back(
-      NodeDef("Shape", {b}, {b_shape}, NodeAttributes(), b_shape.name + "_rhs"));
+      NodeDef("Shape",
+              {b},
+              {b_shape}));
 
   ArgDef a_op = ArgDef(""), b_op = ArgDef("");
   if (a_axes)
