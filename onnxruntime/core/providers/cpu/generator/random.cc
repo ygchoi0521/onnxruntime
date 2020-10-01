@@ -277,16 +277,16 @@ static Status RandomNormalCompute(float mean, float scale,
                                   TensorProto::DataType dtype, Tensor& Y) {
   switch (dtype) {
     case TensorProto::FLOAT: {
-      GenerateData<float, std::normal_distribution<float>>(
-          generator, std::normal_distribution<float>{mean, scale}, Y);
+      std::normal_distribution<float> dist{mean, scale};
+      GenerateData<float, std::normal_distribution<float>>(generator, dist, Y);
       break;
     }
     case TensorProto::FLOAT16: {
       ORT_NOT_IMPLEMENTED("FLOAT16 is not supported");
     }
     case TensorProto::DOUBLE: {
-      GenerateData<double, std::normal_distribution<double>>(
-          generator, std::normal_distribution<double>{mean, scale}, Y);
+      std::normal_distribution<double> dist{mean, scale};
+      GenerateData<double, std::normal_distribution<double>>(generator, dist, Y);
       break;
     }
     default:
