@@ -4,7 +4,7 @@ jobs:
     vmImage: 'macOS-10.15'
   timeoutInMinutes: 120
   steps:
-    - script: echo $(Build.SourceVersion) && echo $(Build.SourceBranchName) && echo $(Build.BuildId)
+    - script: echo $(Build.SourceVersion) && echo $(Build.SourceBranchName) && echo $(Build.BuildId) && echo $(dashboard-mysql-ort-password)
     - script: brew install coreutils ninja
       displayName: Install coreutils and ninja
     - script: tools/ci_build/build.py --android --build_dir build --android_sdk_path $ANDROID_HOME --android_ndk_path $ANDROID_HOME/ndk-bundle --android_abi=x86_64 --android_api=29 --skip_submodule_sync --parallel --use_nnapi --cmake_generator=Ninja --build_java
