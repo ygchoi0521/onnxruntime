@@ -16,6 +16,7 @@ python3 /onnxruntime_src/tools/ci_build/build.py \
     --config MinSizeRel \
     --skip_submodule_sync \
     --parallel \
+    --android \
     --android_sdk_path /android_home \
     --android_ndk_path /android_home/ndk-bundle \
     --android_abi=arm64-v8a \
@@ -29,6 +30,7 @@ python3 /onnxruntime_src/tools/ci_build/build.py \
 # Install the ORT python wheel
 python3 -m pip install --user mysql-connector-python
 
+cat $BUILD_BUILDNUMBER
 cat /build/MinSizeRel/binary_size_data.txt
 
 # Uninstall the ORT python wheel
