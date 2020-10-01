@@ -17,4 +17,6 @@ jobs:
       displayName: Clear the previous build and setup for arm64 minimal build
     - script: tools/ci_build/build.py --android --build_dir build --android_sdk_path $ANDROID_HOME --android_ndk_path $ANDROID_HOME/ndk-bundle --android_abi=arm64-v8a --android_api=29 --skip_submodule_sync --parallel --cmake_generator=Ninja --config MinSizeRel --minimal_build --disable_rtti --disable_ml_ops --disable_exceptions --build_java --test_binary_size --include_ops_by_config $TMPDIR/include_ops/include_no_ops.txt
       displayName: Build arm64 absolutely minimal build and verify the library size
-    - script: tools/ci_build/github/windows/post_binary_sizes_to_dashboard.py --commit_hash=$(Build.SourceVersion) --size_data_file=build/MinSizeRel/binary_size_data.txt --build_project=AndroidCI --build_id=$(Build.BuildId)
+    - script: tools/ci_build/github/windows/post_binary_sizes_to_dashboard.py --commit_hash=$(Build.SourceVersion) --size_data_file=build/MinSizeRel/binary_size_data.txt --build_project=onnxruntime --build_id=$(Build.BuildId)
+      env: DASHBOARD_MYSQL_ORT_PASSWORD: $(dashboard-mysql-ort-password)
+      displayName: Upload Android arm64-v8a minimal build baseline binary size
