@@ -101,7 +101,7 @@ if __name__ == "__main__":
         write_to_db(binary_size_data, args)
     except BaseException as e:
         print(str(e))
-        # If there is DB connection error, and we choose '--ignore_error'
+        # If there is DB connection error, and we choose '--ignore_db_error'
         # we can let the script exit clean in order not to fail the pipeline
         if not args.ignore_db_error:
             sys.exit(1)
