@@ -16,7 +16,8 @@ def parse_arguments():
                         help="Lotus or onnxruntime build project, to construct the build URL")
     parser.add_argument("--build_id", help="Build Id")
     parser.add_argument("--size_data_file", help="Path to file that contains the binary size data")
-    parser.add_argument("--ignore_error", action='store_true', help="Ignore errors while executing this script")
+    parser.add_argument("--ignore_db_error", action='store_true',
+                        help="Ignore database errors while executing this script")
 
     return parser.parse_args()
 
@@ -102,5 +103,5 @@ if __name__ == "__main__":
         print(str(e))
         # If there is DB connection error, and we choose '--ignore_error'
         # we can let the script exit clean in order not to fail the pipeline
-        if not args.ignore_error:
+        if not args.ignore_db_error:
             sys.exit(1)
