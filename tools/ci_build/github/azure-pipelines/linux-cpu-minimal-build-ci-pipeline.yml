@@ -1,7 +1,7 @@
 # This CI has 4 major steps
 # 1. Build full ORT, install the full ORT python wheel and use it to generate ort format test models
 #    and include ops config file for step 4
-# 2. Build baseline minimal ORT for Android including no kernels and disable exceptions
+# 2. Build baseline minimal ORT for Android arm64-v8a including no kernels and disable exceptions
 #    This step is to report the baseline binary size for Android
 # 3. Build minimal ORT including all the kernels and disable exceptions.
 #    This step is build only to safe-guard the --disable_exceptions option.
@@ -43,7 +43,7 @@ jobs:
             /bin/bash /onnxruntime_src/tools/ci_build/github/linux/ort_minimal/build_full_ort_and_create_ort_files.sh
       workingDirectory: $(Build.SourcesDirectory)
   - task: CmdLine@2
-    displayName: Build onnxruntime minimal baseline for Android and report binary size
+    displayName: Build onnxruntime minimal baseline for Android arm64-v8a and report binary size
     inputs:
       script: |
         # Create a folder for all test data

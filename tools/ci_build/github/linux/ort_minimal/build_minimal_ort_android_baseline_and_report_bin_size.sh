@@ -8,7 +8,7 @@ set -e
 # Create an empty file to be used with build --include_ops_by_config, which will include no operators at all
 echo -n > /home/onnxruntimedev/.test_data/include_no_operators.config
 
-# Run a baseline minimal build of ORT
+# Run a baseline minimal build of ORT Android arm64-v8a
 # Generate binary size as /build/MinSizeRel/binary_size_data.txt
 python3 /onnxruntime_src/tools/ci_build/build.py \
     --build_dir /build --cmake_generator Ninja \
@@ -30,11 +30,6 @@ python3 /onnxruntime_src/tools/ci_build/build.py \
 
 # Install the mysql connector
 python3 -m pip install --user mysql-connector-python
-
-echo $BUILD_SOURCEVERSION
-echo $BUILD_ID
-
-cat /build/MinSizeRel/binary_size_data.txt
 
 # Post the binary size info to ort mysql DB
 # The report script failure will not fail the pipeline
