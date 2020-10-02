@@ -36,6 +36,13 @@ echo $BUILD_ID
 
 cat /build/MinSizeRel/binary_size_data.txt
 
+python3 /onnxruntime_src/tools/ci_build/github/windows/post_binary_sizes_to_dashboard.py \
+    --ignore_error \ # will not let report binary size error fail the pipeline
+    --commit_hash=$BUILD_SOURCEVERSION \
+    --size_data_file=/build/MinSizeRel/binary_size_data.txt \
+    --build_project=onnxruntime \
+    --build_id=$BUILD_ID
+
 # Uninstall the ORT python wheel
 python3 -m pip uninstall -y mysql-connector-python
 
