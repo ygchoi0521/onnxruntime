@@ -22,6 +22,7 @@ python3 /onnxruntime_src/tools/ci_build/build.py \
     --android_api=29 \
     --minimal_build \
     --build_shared_lib \
+    --build_java \
     --disable_ml_ops \
     --disable_exceptions \
     --test_binary_size \
@@ -43,9 +44,6 @@ python3 /onnxruntime_src/tools/ci_build/github/windows/post_binary_sizes_to_dash
     --size_data_file=/build/MinSizeRel/binary_size_data.txt \
     --build_project=onnxruntime \
     --build_id=$BUILD_ID
-
-# Uninstall the mysql connector
-python3 -m pip uninstall -y mysql-connector-python
 
 # Clear the build
 rm -rf /build/MinSizeRel

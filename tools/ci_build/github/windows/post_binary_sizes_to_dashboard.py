@@ -105,8 +105,6 @@ if __name__ == "__main__":
         print(str(e))
         # we choose to let the script exit clean in order not to fail the pipeline
         if ignore_error:
-            from logger import log
-            log.warning("Error in post_binary_sizes_to_dashboard, {}".str(e))
             sys.exit(0)
         else:
             sys.exit(1)
