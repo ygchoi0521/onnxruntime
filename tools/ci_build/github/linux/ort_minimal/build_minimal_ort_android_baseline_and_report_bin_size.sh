@@ -39,6 +39,3 @@ python3 /onnxruntime_src/tools/ci_build/github/windows/post_binary_sizes_to_dash
     --size_data_file=/build/MinSizeRel/binary_size_data.txt \
     --build_project=onnxruntime \
     --build_id=$BUILD_ID
-
-# Clear the build
-rm -rf /build/MinSizeRel
