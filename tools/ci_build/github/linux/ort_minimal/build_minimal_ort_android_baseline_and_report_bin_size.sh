@@ -1,16 +1,15 @@
 #!/bin/bash
 
-# This script will run a full ORT build and use the python package built to generate ort format test files,
-# and the exclude ops config file, which will be used in the build_minimal_ort_and_run_tests.sh
+# This script will run a baseline minimal ort build for android arm64-v8a ABI
+# and report the binary size to the ort mysql DB
 
 set -e
 
 # Create an empty file to be used with build --include_ops_by_config, which will include no operators at all
 echo -n > /home/onnxruntimedev/.test_data/include_no_operators.config
 
-# Run a full build of ORT
-# Since we need the ORT python package to generate the ORT format files and the include ops config files
-# Will not run tests since those are covered by other CIs
+# Run a baseline minimal build of ORT
+# Generate binary size as /build/MinSizeRel/binary_size_data.txt
 python3 /onnxruntime_src/tools/ci_build/build.py \
     --build_dir /build --cmake_generator Ninja \
     --config MinSizeRel \
@@ -28,7 +27,7 @@ python3 /onnxruntime_src/tools/ci_build/build.py \
     --test_binary_size \
     --include_ops_by_config /home/onnxruntimedev/.test_data/include_no_operators.config
 
-# Install the ORT python wheel
+# Install the mysql connector
 python3 -m pip install --user mysql-connector-python
 
 echo $BUILD_SOURCEVERSION
@@ -36,14 +35,16 @@ echo $BUILD_ID
 
 cat /build/MinSizeRel/binary_size_data.txt
 
+# Post the binary size info to ort mysql DB
+# The report script failure will not fail the pipeline
 python3 /onnxruntime_src/tools/ci_build/github/windows/post_binary_sizes_to_dashboard.py \
-    --ignore_error \ # will not let report binary size error fail the pipeline
+    --ignore_error \
     --commit_hash=$BUILD_SOURCEVERSION \
     --size_data_file=/build/MinSizeRel/binary_size_data.txt \
     --build_project=onnxruntime \
     --build_id=$BUILD_ID
 
-# Uninstall the ORT python wheel
+# Uninstall the mysql connector
 python3 -m pip uninstall -y mysql-connector-python
 
 # Clear the build
