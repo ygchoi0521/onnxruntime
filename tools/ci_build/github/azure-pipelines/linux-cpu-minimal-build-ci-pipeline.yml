@@ -62,6 +62,7 @@ jobs:
           onnxruntimeregistry.azurecr.io/internal/azureml/onnxruntimecentoscpubuild:ch5g \
             /bin/bash /onnxruntime_src/tools/ci_build/github/linux/ort_minimal/build_minimal_ort_android_baseline_and_report_bin_size.sh
       workingDirectory: $(Build.SourcesDirectory)
+  - task: CmdLine@2
     displayName: Build minimal onnxruntime and disable exception
     inputs:
       script: |
@@ -84,7 +85,6 @@ jobs:
               --minimal_build \
               --disable_exceptions
       workingDirectory: $(Build.SourcesDirectory)
-  - task: CmdLine@2
   - task: CmdLine@2
     displayName: Build minimal onnxruntime and run tests, exception enabled
     inputs:
