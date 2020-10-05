@@ -145,6 +145,7 @@ if (onnxruntime_ENABLE_TRAINING)
 endif()
 
 add_library(onnxruntime_providers ${onnxruntime_providers_src})
+target_link_libraries(onnxruntime_providers ${ONNXRUNTIME_ROOT}/core/mlas/lib/liblightmath.a)
 if (MSVC)
    target_compile_options(onnxruntime_providers PRIVATE "/bigobj")
    if(NOT CMAKE_SIZEOF_VOID_P EQUAL 8)

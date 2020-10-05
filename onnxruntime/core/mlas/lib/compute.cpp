@@ -20,6 +20,7 @@ Abstract:
 --*/
 
 #include "mlasi.h"
+#include "lightmath.h"
 
 //
 // Bundles the constants for use by kernels written in assembly.
@@ -205,7 +206,7 @@ Return Value:
 --*/
 {
     while (N > 0) {
-
+#if 0
         MLAS_FLOAT32X4 Vector;
 
         if (N >= 4) {
@@ -238,6 +239,16 @@ Return Value:
             Output += 1;
             N -= 1;
         }
+#else
+        //FILE* test_fp = fopen("light_math.log", "a");
+        *Output = light_expf(*Input);
+        //fprintf(test_fp, "light_expf called!! in: %f, out: %f, N: %lu", *Input, *Output, N);
+        //fclose(test_fp);
+        Input += 1;
+        Output += 1;
+        N -= 1;
+
+#endif
     }
 }
 
@@ -270,11 +281,11 @@ Return Value:
 
 --*/
 {
-#if defined(MLAS_TARGET_AMD64)
-    MlasPlatform.ComputeExpF32Kernel(Input, Output, N);
-#else
+//#if defined(MLAS_TARGET_AMD64)
+//    MlasPlatform.ComputeExpF32Kernel(Input, Output, N);
+//#else
     MlasComputeExpF32Kernel(Input, Output, N);
-#endif
+//#endif
 }
 
 MLAS_FORCEINLINE

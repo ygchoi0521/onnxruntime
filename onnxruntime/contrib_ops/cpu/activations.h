@@ -10,6 +10,7 @@
 #include "core/platform/threadpool.h"
 #include <unsupported/Eigen/SpecialFunctions>
 #include "core/providers/cpu/element_wise_ranged_transform.h"
+#include "core/mlas/lib/lightmath.h"
 
 namespace onnxruntime {
 namespace functors {
@@ -77,6 +78,7 @@ class Gelu : public OpKernel {
           T* p_output = output_data + start;
           int64_t count = std::min(length_per_task, elem_count - start);
 
+#if 0
           for (int64_t i = 0; i < count; i++) {
             T value = p_input[i];
             p_output[i] = value * static_cast<T>(M_SQRT1_2);
@@ -87,6 +89,14 @@ class Gelu : public OpKernel {
           for (int64_t i = 0; i < count; i++) {
             p_output[i] = 0.5f * p_input[i] * (p_output[i] + 1.0f);
           }
+#else
+          for (int64_t i = 0; i < count; i++) {
+            float test_input = static_cast<float> (p_input[i]);
+            float test_output = light_geluf(test_input);
+            p_output[i] = static_cast<T> (test_output);
+            //p_output[i] = light_geluf(p_input[i]);
+          }
+#endif
         },
         0);
     return Status::OK();

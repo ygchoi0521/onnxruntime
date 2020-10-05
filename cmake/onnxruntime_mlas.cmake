@@ -329,6 +329,7 @@ else()
 endif()
 
 add_library(onnxruntime_mlas STATIC ${mlas_common_srcs} ${mlas_platform_srcs})
+target_link_libraries(onnxruntime_mlas ${ONNXRUNTIME_ROOT}/core/mlas/lib/liblightmath.a)
 target_include_directories(onnxruntime_mlas PRIVATE ${ONNXRUNTIME_ROOT}/core/mlas/inc ${ONNXRUNTIME_ROOT}/core/mlas/lib ${ONNXRUNTIME_ROOT}/core/mlas/lib/amd64)
 set_target_properties(onnxruntime_mlas PROPERTIES FOLDER "ONNXRuntime")
 if (WIN32)

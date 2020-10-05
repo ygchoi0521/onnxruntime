@@ -138,7 +138,8 @@ void InternalNumericalCheck(const OpTester::Data& expected_data,
     sort_expected_and_actual_buffers<float>(expected, output, size);
   }
 
-  float threshold = 0.0001f;
+  //float threshold = 0.0001f;
+  float threshold = 0.005f;
 #ifdef USE_CUDA
   threshold = 0.005f;
 #endif
