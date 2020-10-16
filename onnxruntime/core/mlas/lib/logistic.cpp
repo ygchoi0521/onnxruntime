@@ -21,6 +21,7 @@ Abstract:
 --*/
 
 #include "mlasi.h"
+#include "lightmath.h"
 
 //
 // Bundles the floating point constants for use by kernels written in assembly.
@@ -85,6 +86,7 @@ Return Value:
 
 --*/
 {
+#if 0
     while (N >= 4) {
 
         MLAS_FLOAT32X4 Value = MlasLoadFloat32x4(Input);
@@ -143,6 +145,14 @@ Return Value:
 
         N -= 1;
     }
+#else
+    while (N > 0) {
+        *Output = light_sigmoidf(*Input);
+        Input += 1;
+        Output += 1;
+        N -= 1;
+    }
+#endif
 }
 
 void
@@ -172,9 +182,9 @@ Return Value:
 
 --*/
 {
-#if defined(MLAS_TARGET_AMD64)
-    MlasPlatform.LogisticKernelRoutine(Input, Output, N);
-#else
+//#if defined(MLAS_TARGET_AMD64)
+//    MlasPlatform.LogisticKernelRoutine(Input, Output, N);
+//#else
     MlasLogisticKernel(Input, Output, N);
-#endif
+//#endif
 }

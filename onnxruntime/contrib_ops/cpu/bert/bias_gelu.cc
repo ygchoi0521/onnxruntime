@@ -11,6 +11,7 @@
 #include "core/providers/common.h"
 #include "core/util/math_cpuonly.h"
 #include "core/mlas/inc/mlas.h"
+#include "core/mlas/lib/lightmath.h"
 
 namespace onnxruntime {
 namespace contrib {
@@ -55,6 +56,7 @@ Status BiasGelu<T, use_approximation>::Compute(OpKernelContext* context) const {
             T* p_output = output_data + start;
             int64_t count = std::min(length_per_task, elem_count - start);
 
+#if 0 
             for (int64_t i = 0; i < count; i++) {
               T value = p_input[i];
               p_output[i] = value * (static_cast<T>(C) * value * value + static_cast<T>(B));
@@ -65,6 +67,13 @@ Status BiasGelu<T, use_approximation>::Compute(OpKernelContext* context) const {
             for (int64_t i = 0; i < count; i++) {
               p_output[i] = 0.5f * p_input[i] * (p_output[i] + 1.0f);
             }
+#else
+            for (int64_t i = 0; i < count; i++) {
+              float test_input = static_cast<float> (p_input[i]);
+              float test_output = light_geluf(test_input);
+              p_output[i] = static_cast<T> (test_output);
+            }
+#endif
           },
           0);
     }
@@ -100,6 +109,7 @@ template <typename T, bool use_approximation>
 void BiasGelu<T, use_approximation>::AddBiasGelu(
     const T* input, const T* bias, T* temp, T* output, int64_t count) const {
   if (use_approximation) {
+#if 0
     for (int64_t i = 0; i < count; i++) {
       T value = input[i] + bias[i];
       output[i] = value * (static_cast<T>(C) * value * value + static_cast<T>(B));
@@ -111,7 +121,18 @@ void BiasGelu<T, use_approximation>::AddBiasGelu(
     for (int64_t i = 0; i < count; i++) {
       output[i] = temp[i] * (output[i] + 1.0f);
     }
+#else
+
+    for (int64_t i = 0; i < count; i++) {
+      T value = input[i] + bias[i];
+      temp[i] = value * 0.5f;
+      float test_input = static_cast<float>(value);
+      float test_output = light_geluf(test_input);
+      output[i] = static_cast<T>(test_output);
+    }
+#endif
   } else {  // BiasGelu
+#if 0
     for (int64_t i = 0; i < count; i++) {
       T value = input[i] + bias[i];
       output[i] = value * static_cast<T>(M_SQRT1_2);
@@ -123,6 +144,15 @@ void BiasGelu<T, use_approximation>::AddBiasGelu(
     for (int64_t i = 0; i < count; i++) {
       output[i] = temp[i] * (output[i] + 1.0f);
     }
+#else
+    for (int64_t i = 0; i < count; i++) {
+      T value = input[i] + bias[i];
+      temp[i] = value * 0.5f;
+      float test_input = static_cast<float>(value);
+      float test_output = light_geluf(test_input);
+      output[i] = static_cast<T>(test_output);
+    }
+#endif
   }
 }
 

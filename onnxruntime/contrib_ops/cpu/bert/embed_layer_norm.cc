@@ -5,6 +5,7 @@
 #include "embed_layer_norm_helper.h"
 #include "core/util/math_cpuonly.h"
 #include "core/platform/threadpool.h"
+#include "core/mlas/lib/lightmath.h"
 
 #include <atomic>
 
@@ -112,10 +113,19 @@ Status EmbedLayerNorm<T>::Compute(OpKernelContext* context) const {
         y[i] = a;
         sum += a * a;
       }
+#if 0
       T e = sqrt(sum / hidden_size + static_cast<T>(epsilon_));
       for (int i = 0; i < hidden_size; i++) {
         y[i] = y[i] / e * gamma_data[i] + beta_data[i];
       }
+#else
+      float test_input = sum / hidden_size + static_cast<float>(epsilon_);
+      float test_output = light_rsqrtf(test_input);
+      T e_inv = static_cast<T> (test_output);
+      for (int i = 0; i < hidden_size; i++) {
+        y[i] = y[i] * e_inv * gamma_data[i] + beta_data[i];
+      }
+#endif
     }, 0);
 
     if (failed.load(std::memory_order_acquire)) {
