@@ -918,11 +918,11 @@ Return Value:
             // compute the sum of these exponential functions.
             //
 
-#if defined(MLAS_TARGET_AMD64)
-            float Accumulation = MlasPlatform.ComputeSumExpF32Kernel(Input, Output, D, &NegativeMaximum);
-#else
+//#if defined(MLAS_TARGET_AMD64)
+//            float Accumulation = MlasPlatform.ComputeSumExpF32Kernel(Input, Output, D, &NegativeMaximum);
+//#else
             float Accumulation = MlasComputeSumExpF32Kernel(Input, Output, D, &NegativeMaximum);
-#endif
+//#endif
 
             //
             // Normalize the softmax output.
@@ -930,11 +930,11 @@ Return Value:
 
             float Parameters[] = { 1.0f / Accumulation };
 
-#if defined(MLAS_TARGET_AMD64)
-            MlasPlatform.ComputeSoftmaxOutputF32Kernel(Output, D, Parameters);
-#else
+//#if defined(MLAS_TARGET_AMD64)
+//            MlasPlatform.ComputeSoftmaxOutputF32Kernel(Output, D, Parameters);
+//#else
             MlasComputeSoftmaxOutputF32Kernel(Output, D, Parameters);
-#endif
+//#endif
         }
 
         Input += D;
