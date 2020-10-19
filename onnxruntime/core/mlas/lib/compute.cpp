@@ -326,6 +326,7 @@ Return Value:
 
     Vector = MlasAddFloat32x4(Vector, NegativeMaximumVector);
 
+#if 0
     //
     // Clamp to the lower range of this function.
     //
@@ -376,6 +377,15 @@ Return Value:
     p = MlasMultiplyFloat32x4(p, MlasReinterpretAsFloat32x4(normal));
 
     return p;
+#else
+    float temp_vector[4];
+    MlasStoreFloat32x4(temp_vector, Vector);
+    for (int i=0; i<4; i++) {
+        temp_vector[i] = light_expf(temp_vector[i]);
+    }
+    auto p = MlasLoadFloat32x4(temp_vector);
+    return p;
+#endif
 }
 
 float
