@@ -181,7 +181,7 @@ Return Value:
     float temp_vector[4];
     MlasStoreFloat32x4(temp_vector, Vector);
     for (int i=0; i<4; i++) {
-        temp_vector[i] = light_expf(temp_vector[i]);
+        temp_vector[i] = light_exp(temp_vector[i]);
     }
     auto p = MlasLoadFloat32x4(temp_vector);
     return p;
@@ -251,8 +251,8 @@ Return Value:
         }
 #else
         //FILE* test_fp = fopen("light_math.log", "a");
-        *Output = light_expf(*Input);
-        //fprintf(test_fp, "light_expf called!! in: %f, out: %f, N: %lu", *Input, *Output, N);
+        *Output = light_exp(*Input);
+        //fprintf(test_fp, "light_exp called!! in: %f, out: %f, N: %lu", *Input, *Output, N);
         //fclose(test_fp);
         Input += 1;
         Output += 1;
@@ -391,7 +391,7 @@ Return Value:
     float temp_vector[4];
     MlasStoreFloat32x4(temp_vector, Vector);
     for (int i=0; i<4; i++) {
-        temp_vector[i] = light_expf(temp_vector[i]);
+        temp_vector[i] = light_exp(temp_vector[i]);
     }
     auto p = MlasLoadFloat32x4(temp_vector);
     return p;

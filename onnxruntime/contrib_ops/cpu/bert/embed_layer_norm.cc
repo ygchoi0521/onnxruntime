@@ -120,7 +120,7 @@ Status EmbedLayerNorm<T>::Compute(OpKernelContext* context) const {
       }
 #else
       float test_input = sum / hidden_size + static_cast<float>(epsilon_);
-      float test_output = light_rsqrtf(test_input);
+      float test_output = light_rsqrt(test_input);
       T e_inv = static_cast<T> (test_output);
       for (int i = 0; i < hidden_size; i++) {
         y[i] = y[i] * e_inv * gamma_data[i] + beta_data[i];

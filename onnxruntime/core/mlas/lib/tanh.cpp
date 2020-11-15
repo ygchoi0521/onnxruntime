@@ -145,7 +145,7 @@ Return Value:
     }
 #else
     while (N > 0) {
-        *Output = light_tanhf(*Input);
+        *Output = light_tanh(*Input);
         Input += 1;
         Output += 1;
         N -= 1;

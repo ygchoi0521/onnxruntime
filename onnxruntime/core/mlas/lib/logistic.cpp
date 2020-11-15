@@ -147,7 +147,7 @@ Return Value:
     }
 #else
     while (N > 0) {
-        *Output = light_sigmoidf(*Input);
+        *Output = light_sigmoid(*Input);
         Input += 1;
         Output += 1;
         N -= 1;

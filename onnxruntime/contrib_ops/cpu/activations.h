@@ -92,9 +92,8 @@ class Gelu : public OpKernel {
 #else
           for (int64_t i = 0; i < count; i++) {
             float test_input = static_cast<float> (p_input[i]);
-            float test_output = light_geluf(test_input);
+            float test_output = light_gelu(test_input);
             p_output[i] = static_cast<T> (test_output);
-            //p_output[i] = light_geluf(p_input[i]);
           }
 #endif
         },
