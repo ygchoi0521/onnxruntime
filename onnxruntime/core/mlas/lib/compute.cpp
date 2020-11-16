@@ -118,7 +118,15 @@ Return Value:
 
 --*/
 {
-#if 0
+
+#ifndef FURIOSA_CUSTOM_EVAL
+    
+    #ifdef FURIOSA_TRUNCATE_RANGE
+    float cast_vector[4];
+    MlasStoreFloat32x4(cast_vector, Vector);
+    for (int i=0; i<4; i++) cast_vector[i] = truncate_to_range(cast_vector[i]);
+    Vector = MlasLoadFloat32x4(cast_vector);
+    #endif
     Vector = MlasClampFloat32x4(Vector, MlasExpConstants.LowerRange, MlasExpConstants.UpperRange);
 
     //
@@ -216,7 +224,7 @@ Return Value:
 --*/
 {
     while (N > 0) {
-#if 0
+#ifdef FURIOSA_CUSTOM_EVAL
         MLAS_FLOAT32X4 Vector;
 
         if (N >= 4) {
@@ -230,6 +238,13 @@ Return Value:
             Vector = MlasBroadcastFloat32x4(Input);
 #endif
         }
+
+        #ifdef FURIOSA_TRUNCATE_RANGE
+        float cast_vector[4];
+        MlasStoreFloat32x4(cast_vector, Vector);
+        for (int i=0; i<4; i++) cast_vector[i] = truncate_to_range(cast_vector[i]);
+        Vector = MlasLoadFloat32x4(cast_vector);
+        #endif
 
         Vector = MlasComputeExpVector(Vector);
 
@@ -336,7 +351,14 @@ Return Value:
 
     Vector = MlasAddFloat32x4(Vector, NegativeMaximumVector);
 
-#if 0
+#ifndef FURIOSA_CUSTOM_EVAL
+
+    #ifdef FURIOSA_TRUNCATE_RANGE
+    float cast_vector[4];
+    MlasStoreFloat32x4(cast_vector, Vector);
+    for (int i=0; i<4; i++) cast_vector[i] = truncate_to_range(cast_vector[i]);
+    Vector = MlasLoadFloat32x4(cast_vector);
+    #endif
     //
     // Clamp to the lower range of this function.
     //
@@ -885,7 +907,11 @@ Return Value:
 #else
         float Maximum = MlasReduceMaximumF32Kernel(Input, D);
 #endif
+        #ifndef FURIOSA_TRUNCATE_RANGE
         float NegativeMaximum = -Maximum;
+        #else
+        float NegativeMaximum = -truncate_to_range(Maximum);
+        #endif
 
         if (LogSoftmax) {
 

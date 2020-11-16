@@ -100,9 +100,15 @@ Status EmbedLayerNorm<T>::Compute(OpKernelContext* context) const {
 
       T sum = static_cast<T>(0);
       for (int i = 0; i < hidden_size; i++) {
+        #ifndef FURIOSA_TRUNCATE_RANGE
         T subtotal = input_word_embedding[i] + input_position_embedding[i];
         if (nullptr != segment_embedding_data)
           subtotal += input_segment_embedding[i];
+        #else
+        T subtotal = truncate_to_range(input_word_embedding[i]) + truncate_to_range(input_position_embedding[i]);
+        if (nullptr != segment_embedding_data)
+          subtotal += truncate_to_range(input_segment_embedding[i]);
+        #endif
         y[i] = subtotal;
         sum += subtotal;
       }
@@ -113,7 +119,7 @@ Status EmbedLayerNorm<T>::Compute(OpKernelContext* context) const {
         y[i] = a;
         sum += a * a;
       }
-#if 0
+#ifndef FURIOSA_CUSTOM_EVAL
       T e = sqrt(sum / hidden_size + static_cast<T>(epsilon_));
       for (int i = 0; i < hidden_size; i++) {
         y[i] = y[i] / e * gamma_data[i] + beta_data[i];

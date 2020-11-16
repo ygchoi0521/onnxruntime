@@ -56,16 +56,25 @@ Status BiasGelu<T, use_approximation>::Compute(OpKernelContext* context) const {
             T* p_output = output_data + start;
             int64_t count = std::min(length_per_task, elem_count - start);
 
-#if 0 
+#ifndef FURIOSA_CUSTOM_EVAL 
+
             for (int64_t i = 0; i < count; i++) {
+              #ifndef FURIOSA_TRUNCATE_RANGE
               T value = p_input[i];
+              #else
+              T value = truncate_to_range(p_input[i]);
+              #endif
               p_output[i] = value * (static_cast<T>(C) * value * value + static_cast<T>(B));
             }
 
             MlasComputeTanh(p_output, p_output, count);
 
             for (int64_t i = 0; i < count; i++) {
+              #ifndef FURIOSA_TRUNCATE_RANGE
               p_output[i] = 0.5f * p_input[i] * (p_output[i] + 1.0f);
+              #else
+              p_output[i] = 0.5f * truncate_to_range(p_input[i]) * (p_output[i] + 1.0f);
+              #endif
             }
 #else
             for (int64_t i = 0; i < count; i++) {
@@ -109,9 +118,13 @@ template <typename T, bool use_approximation>
 void BiasGelu<T, use_approximation>::AddBiasGelu(
     const T* input, const T* bias, T* temp, T* output, int64_t count) const {
   if (use_approximation) {
-#if 0
+#ifndef FURIOSA_CUSTOM_EVAL
     for (int64_t i = 0; i < count; i++) {
+      #ifndef FURIOSA_TRUNCATE_RANGE
       T value = input[i] + bias[i];
+      #else
+      T value = truncate_to_range(input[i]) + bias[i];
+      #endif
       output[i] = value * (static_cast<T>(C) * value * value + static_cast<T>(B));
       temp[i] = value * 0.5f;
     }
@@ -122,7 +135,6 @@ void BiasGelu<T, use_approximation>::AddBiasGelu(
       output[i] = temp[i] * (output[i] + 1.0f);
     }
 #else
-
     for (int64_t i = 0; i < count; i++) {
       T value = input[i] + bias[i];
       temp[i] = value * 0.5f;
@@ -132,9 +144,13 @@ void BiasGelu<T, use_approximation>::AddBiasGelu(
     }
 #endif
   } else {  // BiasGelu
-#if 0
+#ifndef FURIOSA_CUSTOM_EVAL
     for (int64_t i = 0; i < count; i++) {
+      #ifndef FURIOSA_TRUNCATE_RANGE
       T value = input[i] + bias[i];
+      #else
+      T value = truncate_to_range(input[i]) + bias[i];
+      #endif
       output[i] = value * static_cast<T>(M_SQRT1_2);
       temp[i] = value * 0.5f;
     }

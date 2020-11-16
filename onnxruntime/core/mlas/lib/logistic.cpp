@@ -86,13 +86,21 @@ Return Value:
 
 --*/
 {
-#if 0
+#ifndef FURIOSA_CUSTOM_EVAL
     while (N >= 4) {
-
+        
         MLAS_FLOAT32X4 Value = MlasLoadFloat32x4(Input);
-
+        #ifdef FURIOSA_TRUNCATE_RANGE
+        float cast_vector[4];
+        MlasStoreFloat32x4(cast_vector, Value);
+        for (int i=0; i<4; i++) cast_vector[i] = truncate_to_range(cast_vector[i]);
+        Value = MlasLoadFloat32x4(cast_vector);
+        Value = MlasMaximumFloat32x4(MlasBroadcastFloat32x4(truncate_to_range(MlasLogisticConstants.LowerRange)), Value);
+        Value = MlasMinimumFloat32x4(MlasBroadcastFloat32x4(truncate_to_range(MlasLogisticConstants.UpperRange)), Value);       
+        #else
         Value = MlasMaximumFloat32x4(MlasBroadcastFloat32x4(MlasLogisticConstants.LowerRange), Value);
         Value = MlasMinimumFloat32x4(MlasBroadcastFloat32x4(MlasLogisticConstants.UpperRange), Value);
+        #endif
 
         MLAS_FLOAT32X4 ValueSquared = MlasMultiplyFloat32x4(Value, Value);
 

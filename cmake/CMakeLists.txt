@@ -208,6 +208,15 @@ if(onnxruntime_USE_OPENMP)
   endif()
 endif()
 
+if(FURIOSA_CUSTOM_EVAL)
+  add_compile_definitions(FURIOSA_CUSTOM_EVAL)
+endif()
+
+if(FURIOSA_TRUNCATE_RANGE)
+  add_compile_definitions(FURIOSA_TRUNCATE_RANGE)
+endif()
+
+
 # ORT build with as much excluded as possible. Supports ORT flatbuffers models only.
 # Will expose option in build.py when all pieces are available
 if(onnxruntime_MINIMAL_BUILD)
